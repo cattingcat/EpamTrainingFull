@@ -14,13 +14,18 @@ namespace WebClient
 {
     public partial class PersonList : System.Web.UI.Page
     {
-        private IAccessor<Person> accessor;
+        private IAccessor<Person> _personAccessor;
+
+        public PersonList() { }
+        public PersonList(IAccessor<Person> personAccessor)
+        {
+            _personAccessor = personAccessor;
+        }
         
         #region lifecycle
         protected void Page_Init(object sender, EventArgs e)
         {
-            Global.GlobalLogger.Trace("PersonList init");
-            accessor = Global.PersonAccessor;            
+            Global.GlobalLogger.Trace("PersonList init");          
         }
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -30,7 +35,7 @@ namespace WebClient
                 string personId = Request["delete"];
                 if (!string.IsNullOrEmpty(personId))
                 {
-                    accessor.DeleteById(int.Parse(personId));
+                    _personAccessor.DeleteById(int.Parse(personId));
                 }
             }
             catch (SqlException ex)
@@ -52,7 +57,7 @@ namespace WebClient
                     LastName = lastNameInput.Value.Trim(),
                     DayOfBirth = DateTime.Parse(dateInput.Value)
                 };
-                accessor.Insert(p);
+                _personAccessor.Insert(p);
             }
             catch (SqlException ex)
             {
@@ -72,7 +77,7 @@ namespace WebClient
             Global.GlobalLogger.Trace("PersonList pre-render");
             try
             {
-                IEnumerable<Person> persons = accessor.GetAll();
+                IEnumerable<Person> persons = _personAccessor.GetAll();
                 FillTable(persons);
             }
             catch (SqlException ex)

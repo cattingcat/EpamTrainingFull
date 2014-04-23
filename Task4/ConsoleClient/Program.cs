@@ -1,6 +1,7 @@
 ﻿using DataAccessors.Accessors;
 using DataAccessors.Data;
 using DataAccessors.Entity;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,6 +16,8 @@ namespace ConsoleClient
 {
     class Program
     {
+        public static Logger log;
+
         class SimpleTimer: IDisposable
         {
             private Stopwatch sw;
@@ -34,6 +37,9 @@ namespace ConsoleClient
 
         static void Main(string[] args)
         {
+            log = LogManager.GetCurrentClassLogger();
+            log.Trace("App run!");
+
             Console.WriteLine(
 @"Select data accessor: 
 orm accessor       - 1
@@ -45,6 +51,7 @@ memory accessor    - 5");
             IAccessor<Person> personAcc = null;
             IAccessor<Phone> phoneAcc = null;
             int resp = int.Parse(Console.ReadLine());
+            log.Trace("User select accesor No: {0}", resp);
 
             string appConfigConnectionString = "ServiceDb";
             switch (resp)
@@ -81,12 +88,20 @@ exit   - 0");
                 bool b = int.TryParse(Console.ReadLine(), out t);
                 if (b)
                 {
-                    if (t == 1)
-                        RunCUI<Person>(personAcc);
-                    else if (t == 2)
-                        RunCUI<Phone>(phoneAcc);
-                    else
-                        return;
+                    try
+                    {
+                        if (t == 1)
+                            RunCUI<Person>(personAcc);
+                        else if (t == 2)
+                            RunCUI<Phone>(phoneAcc);
+                        else
+                            return;
+                    }
+                    catch (FormatException e)
+                    {
+                        log.Warn("FormatException: {0}", e.Message);
+                        throw;
+                    }
                 }
                 else
                     return;
@@ -152,6 +167,7 @@ d [id]                    - delete");
                 string[] command = Console.ReadLine().Split(' ', ',');
                 if (command[0] == "p")
                 {
+                    log.Trace("Print for: {0}", typeof(T).Name);
                     var s = new SimpleTimer();
                     if (command.Length == 1)
                     {
@@ -170,6 +186,7 @@ d [id]                    - delete");
                 }
                 else if (command[0] == "d")
                 {
+                    log.Trace("Delete for: {0}", typeof(T).Name);
                     var s = new SimpleTimer();
                     int id = Int32.Parse(command[1]);
                     accessor.DeleteById(id);
@@ -177,6 +194,7 @@ d [id]                    - delete");
                 }
                 else if (command[0] == "i")
                 {
+                    log.Trace("Insert for: {0}", typeof(T).Name);
                     var s = new SimpleTimer();
                     object o = FromStringArray<T>(command);
                     accessor.Insert((T)o);

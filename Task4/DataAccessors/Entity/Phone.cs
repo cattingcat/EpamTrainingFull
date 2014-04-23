@@ -16,7 +16,7 @@ namespace DataAccessors.Entity
         public int Id { get; set; }
         [Column(ColumnName = "number", ColumnType = DbType.String)]
         public string Number { get; set; }
-        //[Column(ColumnName = "person_id", ColumnType = DbType.Int32)]
+        [Column(ColumnName = "person_id", ColumnType = DbType.Int32)]
         public int PersonId { get; set; }
 
         [One(SecondTable="PersonTbl", ThisColumn="person_id")]

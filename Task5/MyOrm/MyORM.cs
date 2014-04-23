@@ -1,25 +1,26 @@
-﻿using MyOrm.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 
+using MyOrm.Attributes;
+
 namespace MyOrm
 {
     public class MyORM
     {
-        private IDictionary<Type, OrmMap> mappingPool;
-        private DbProviderFactory factory;
-        private string connectionString;
+        private IDictionary<Type, OrmMap> _mappingPool;
+        private DbProviderFactory _factory;
+        private string _connectionString;
         public bool RelationsEnabled { get; set; }
 
         public MyORM(DbProviderFactory factory, string connectionString, params Type[] types)
         {
-            mappingPool = new Dictionary<Type, OrmMap>();
-            this.factory = factory;
-            this.connectionString = connectionString;
+            _mappingPool = new Dictionary<Type, OrmMap>();
+            _factory = factory;
+            _connectionString = connectionString;
             foreach (Type type in types)
             {
                 RegisterType(type);
@@ -30,20 +31,20 @@ namespace MyOrm
         public void RegisterType(Type type)
         {
             OrmMap map = null;
-            if (!mappingPool.ContainsKey(type))
+            if (!_mappingPool.ContainsKey(type))
             {
                 map = OrmMap.FromType(type);
-                mappingPool[type] = map;
+                _mappingPool[type] = map;
             }
             else
             {
-                map = mappingPool[type];
+                map = _mappingPool[type];
             }
         }
 
         public ICollection<T> SelectAll<T>() where T : class, new()
         {
-            OrmMap map = mappingPool[typeof(T)];
+            OrmMap map = _mappingPool[typeof(T)];
             string selectQuery = map.BuildSelectAllQuery();
             ICollection<T> result = null;
             using (DbConnection connection = GetOpenConnection())
@@ -66,9 +67,10 @@ namespace MyOrm
             }
             return result;
         }
+
         public T SelectById<T>(object id) where T: class, new()
         {            
-            OrmMap map = mappingPool[typeof(T)];            
+            OrmMap map = _mappingPool[typeof(T)];            
             string whereStatement = String.Format("{0}=@id", map.ID);
             string selectQuery = map.BuildSelectWhereQuery(whereStatement);        
 
@@ -96,10 +98,11 @@ namespace MyOrm
                 return result;
             }
         }
+
         public int Insert(object o)
         {
             Type type = o.GetType();
-            OrmMap map = mappingPool[type];            
+            OrmMap map = _mappingPool[type];            
             StringBuilder argListBuilder = new StringBuilder();
             List<KeyValuePair<string, string>> colNameToNamedParam = new List<KeyValuePair<string, string>>();
 
@@ -129,9 +132,10 @@ namespace MyOrm
                 return command.ExecuteNonQuery();
             }
         }
+
         public int Delete<T>(object id) where T : class, new()
         {
-            OrmMap map = mappingPool[typeof(T)];            
+            OrmMap map = _mappingPool[typeof(T)];            
             string whereStatement = String.Format("{0}=@id", map.ID);
 
             string deleteQuery = map.BuildDeleteQuery(whereStatement);
@@ -151,10 +155,11 @@ namespace MyOrm
             }
         }
 
+
         private DbConnection GetOpenConnection()
         {
-            DbConnection connection = factory.CreateConnection();
-            connection.ConnectionString = connectionString;
+            DbConnection connection = _factory.CreateConnection();
+            connection.ConnectionString = _connectionString;
             connection.Open();
             return connection;
         }
@@ -169,7 +174,7 @@ namespace MyOrm
                 string secondTable = attr.SecondTable;
                 string secondColumn = attr.SecondColumn;
                 string thisColumn = attr.ThisColumn;
-                OrmMap innerMap = (from m in mappingPool.Values where m.TableName == secondTable select m).FirstOrDefault<OrmMap>();
+                OrmMap innerMap = (from m in _mappingPool.Values where m.TableName == secondTable select m).FirstOrDefault<OrmMap>();
                 object containerId = containerMap.GetId(containerObj);
 
                 if (attr.Type == RelationType.One)

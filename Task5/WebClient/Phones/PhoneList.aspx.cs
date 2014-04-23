@@ -10,19 +10,26 @@ namespace WebClient.Phones
 {
     public partial class PhoneList : System.Web.UI.Page
     {
-        private IAccessor<Phone> accessor;
+        private IAccessor<Phone> _phoneAccessor;
+        private IAccessor<Person> _personAccessor;
+
+        public PhoneList() { }
+        public PhoneList(IAccessor<Phone> phoneAccessor, IAccessor<Person> personAccessor)
+        {
+            _personAccessor = personAccessor;
+            _phoneAccessor = phoneAccessor;
+        }
 
         #region lifecycle
         protected void Page_Load(object sender, EventArgs e)
         {
             Global.GlobalLogger.Trace("phone page load");
-            accessor = Global.PhoneAccessor;
             try
             {               
                 string phoneId = Request["delete"];
                 if (!string.IsNullOrEmpty(phoneId))
                 {
-                    accessor.DeleteById(int.Parse(phoneId));
+                    _phoneAccessor.DeleteById(int.Parse(phoneId));
                 }
             }
             catch (SqlException ex)
@@ -50,7 +57,7 @@ namespace WebClient.Phones
                     Number = numInput.Value,
                     PersonId = int.Parse(personSelector.Value)
                 };
-                accessor.Insert(p);
+                _phoneAccessor.Insert(p);
             }
             catch (SqlException ex)
             {
@@ -72,7 +79,7 @@ namespace WebClient.Phones
             Global.GlobalLogger.Trace("phone page rpe render");
             try
             {
-                IEnumerable<Phone> phones = accessor.GetAll();
+                IEnumerable<Phone> phones = _phoneAccessor.GetAll();
 
                 string param = Request.QueryString["ownerId"];
                 int ownerId;
@@ -83,7 +90,7 @@ namespace WebClient.Phones
                 }
 
                 FillTable(phones);
-                FillPersonSelector(Global.PersonAccessor.GetAll(), b ? new Nullable<int>(ownerId) : null);
+                FillPersonSelector(_personAccessor.GetAll(), b ? new Nullable<int>(ownerId) : null);
             }
             catch (SqlException ex)
             {

@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using DataAccessors.Entity;
 using System;
+
+using DataAccessors.Entity;
 
 namespace DataAccessors.Accessors
 {
     public class MemoryPersonAccessor: IAccessor<Person>
     {
-        private ICollection<Person> data;
+        private ICollection<Person> _data;
        
+
         public MemoryPersonAccessor(ICollection<Person> data)
         {
-            this.data = data;
+            this._data = data;
         }
 
         public MemoryPersonAccessor()
@@ -28,36 +30,40 @@ namespace DataAccessors.Accessors
                     DayOfBirth = DateTime.Today
                 });
             }
-            this.data = tmp;
+            this._data = tmp;
         }
+
 
         public ICollection<Person> GetAll()
         {
-            return data;
+            return _data;
         }
+
         public Person GetById(object id)
         {
-            var res = from p in data where p.Id == (int)id select p;
+            var res = from p in _data where p.Id == (int)id select p;
             return res.FirstOrDefault<Person>();
         }
+
         public void DeleteById(object id)
         {
-            var res = from p in data where p.Id == (int)id select p;
+            var res = from p in _data where p.Id == (int)id select p;
             Person exPerson = res.FirstOrDefault<Person>();
             if (exPerson != null)
             {
-                data.Remove(exPerson);
+                _data.Remove(exPerson);
             }
         }
+
         public void Insert(Person p)
         {
-            var tmp = from ep in data where ep.Id == p.Id select ep;
+            var tmp = from ep in _data where ep.Id == p.Id select ep;
             Person existPerson = tmp.FirstOrDefault<Person>();
             if (existPerson != null)
             {
-                data.Remove(existPerson);
+                _data.Remove(existPerson);
             }
-            data.Add(p);            
+            _data.Add(p);            
         }
     }
 }

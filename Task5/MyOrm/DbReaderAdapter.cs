@@ -1,34 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyOrm
 {
     internal class DbReaderAdapter
     {
-        private DbDataReader reader;
-        private OrmMap map;
+        private DbDataReader _reader;
+        private OrmMap _map;
 
         public DbReaderAdapter(DbDataReader reader, OrmMap map)
         {
-            this.reader = reader;
-            this.map = map;
+            _reader = reader;
+            _map = map;
         }
 
         public T GetSingleResult<T>() where T: class, new()
         {
-            while (reader.Read())
+            while (_reader.Read())
             {
                 T o = new T();
-                for (int i = 0; i < reader.FieldCount; ++i)
+                for (int i = 0; i < _reader.FieldCount; ++i)
                 {                  
-                    string column = reader.GetName(i);
-                    PropertyInfo info = map[column];
-                    object value = reader.GetValue(i);
+                    string column = _reader.GetName(i);
+                    PropertyInfo info = _map[column];
+                    object value = _reader.GetValue(i);
                     if (value != DBNull.Value)
                     {
                         info.SetValue(o, value);
@@ -46,14 +43,14 @@ namespace MyOrm
         public ICollection<T> GetMultipleResult<T>() where T : class, new()
         {
             List<T> result = new List<T>();
-            while (reader.Read())
+            while (_reader.Read())
             {
                 T o = new T();
-                for (int i = 0; i < reader.FieldCount; ++i)
+                for (int i = 0; i < _reader.FieldCount; ++i)
                 {
-                    string column = reader.GetName(i);
-                    PropertyInfo info = map[column];
-                    object value = reader.GetValue(i);
+                    string column = _reader.GetName(i);
+                    PropertyInfo info = _map[column];
+                    object value = _reader.GetValue(i);
                     if (value != DBNull.Value)
                     {
                         info.SetValue(o, value);
@@ -70,14 +67,14 @@ namespace MyOrm
 
         public object GetSingleResult()
         {
-            while (reader.Read())
+            while (_reader.Read())
             {
-                object o = Activator.CreateInstance(map.ObjectType);
-                for (int i = 0; i < reader.FieldCount; ++i)
+                object o = Activator.CreateInstance(_map.ObjectType);
+                for (int i = 0; i < _reader.FieldCount; ++i)
                 {
-                    string column = reader.GetName(i);
-                    PropertyInfo info = map[column];
-                    object value = reader.GetValue(i);
+                    string column = _reader.GetName(i);
+                    PropertyInfo info = _map[column];
+                    object value = _reader.GetValue(i);
                     if (value != DBNull.Value)
                     {
                         info.SetValue(o, value);
@@ -95,14 +92,14 @@ namespace MyOrm
         public ICollection<object> GetMultipleResult()
         {
             List<object> result = new List<object>();
-            while (reader.Read())
+            while (_reader.Read())
             {
-                object o = Activator.CreateInstance(map.ObjectType);
-                for (int i = 0; i < reader.FieldCount; ++i)
+                object o = Activator.CreateInstance(_map.ObjectType);
+                for (int i = 0; i < _reader.FieldCount; ++i)
                 {
-                    string column = reader.GetName(i);
-                    PropertyInfo info = map[column];
-                    object value = reader.GetValue(i);
+                    string column = _reader.GetName(i);
+                    PropertyInfo info = _map[column];
+                    object value = _reader.GetValue(i);
                     if (value != DBNull.Value)
                     {
                         info.SetValue(o, value);

@@ -1,5 +1,7 @@
 ﻿using DataAccessors.Accessors;
 using DataAccessors.Entity;
+using Ninject;
+using Ninject.Modules;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,41 +13,52 @@ namespace WinFormsClient
 {
     static class Program
     {
-        public static IAccessor<Person> PersonAccessor;
-        public static IAccessor<Phone> PhoneAccessor;
+        private static IKernel _ninjectKernel;
+
+        public static T ResolveForm<T>() where T: Form
+        {
+            return _ninjectKernel.Get<T>();
+        }              
 
         [STAThread]
         static void Main()
+        {      
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            _ninjectKernel = new StandardKernel(new[]{new RegisterDependencies()});      
+            Form form = _ninjectKernel.Get<PersonListForm>();
+            Application.Run(form);
+        }
+    }
+
+    class RegisterDependencies : NinjectModule
+    {
+        public override void Load()
         {
-            string accessorType = ConfigurationManager.AppSettings.Get("AccessorType");
             string appConfigConnectionString = "ServiceDb";
+            string accessorType = ConfigurationManager.AppSettings.Get("AccessorType");
             switch (accessorType)
             {
                 case "orm":
-                    PersonAccessor = new OrmPersonAccessor(appConfigConnectionString);
-                    PhoneAccessor = new OrmPhoneAccessor(appConfigConnectionString);
+                    Kernel.Bind<IAccessor<Person>>().To<OrmPersonAccessor>().InSingletonScope().WithConstructorArgument<string>(appConfigConnectionString);
+                    Kernel.Bind<IAccessor<Phone>>().To<OrmPhoneAccessor>().InSingletonScope().WithConstructorArgument<string>(appConfigConnectionString);
                     break;
                 case "ado":
-                    PersonAccessor = new ADOPersonAccessor(appConfigConnectionString);
-                    PhoneAccessor = new ADOPhoneAccessor(appConfigConnectionString);
+                    Kernel.Bind<IAccessor<Person>>().To<ADOPersonAccessor>().InSingletonScope().WithConstructorArgument<string>(appConfigConnectionString);
+                    Kernel.Bind<IAccessor<Phone>>().To<ADOPhoneAccessor>().InSingletonScope().WithConstructorArgument<string>(appConfigConnectionString);
                     break;
                 case "dir":
-                    PersonAccessor = new DirectoryPersonAccessor(@"App_Data\FolderDb\Persons");
-                    PhoneAccessor = new DirectoryPhoneAccessor(@"App_Data\FolderDb\Phone");
+                    Kernel.Bind<IAccessor<Person>>().To<DirectoryPersonAccessor>().InSingletonScope().WithConstructorArgument<string>(@"App_Data\FolderDb\Persons");
+                    Kernel.Bind<IAccessor<Phone>>().To<DirectoryPhoneAccessor>().InSingletonScope().WithConstructorArgument<string>(@"App_Data\FolderDb\Phones");
                     break;
                 case "file":
-                    PersonAccessor = new FilePersonAccessor(@"App_Data\FileDbs\FilePersonDb.xml");
-                    PhoneAccessor = new FilePhoneAccessor(@"App_Data\FileDbs\FilePhoneDb.xml");
+                    Kernel.Bind<IAccessor<Person>>().To<DirectoryPersonAccessor>().InSingletonScope().WithConstructorArgument<string>(@"App_Data\FileDbs\FilePersonDb.xml");
+                    Kernel.Bind<IAccessor<Phone>>().To<DirectoryPhoneAccessor>().InSingletonScope().WithConstructorArgument<string>(@"App_Data\FileDbs\FilePhoneDb.xml");
                     break;
                 case "mem":
-                    PersonAccessor = new MemoryPersonAccessor();
-                    //phoneAcc = new MemoryPhoneAccessor();
                     break;
             }
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PersonListForm());
         }
     }
 }

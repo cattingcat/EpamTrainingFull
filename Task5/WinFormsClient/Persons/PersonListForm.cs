@@ -17,10 +17,13 @@ namespace WinFormsClient
 {
     public partial class PersonListForm : Form
     {
-        private IAccessor<Person> accessor = Program.PersonAccessor;
+        private IAccessor<Person> _personAccessor;
+        private IAccessor<Phone> _phoneAccessor;
 
-        public PersonListForm()
+        public PersonListForm(IAccessor<Person> personAccessor, IAccessor<Phone> phoneAccessor)
         {
+            _personAccessor = personAccessor;
+            _phoneAccessor = phoneAccessor;
             InitializeComponent();       
         }
 
@@ -45,7 +48,7 @@ namespace WinFormsClient
             ICollection<Person> coll = null;
             try
             {
-                coll = accessor.GetAll();
+                coll = _personAccessor.GetAll();
             }
             catch (SqlException e)
             {
@@ -68,7 +71,7 @@ namespace WinFormsClient
 
                 try
                 {
-                    accessor.DeleteById(personId);
+                    _personAccessor.DeleteById(personId);
                 }
                 catch (SqlException ex)
                 {
@@ -81,7 +84,8 @@ namespace WinFormsClient
             if (col == 5) // show phone list button
             {
                 int personId = (int)dataGridView1.Rows[row].Cells[0].Value;
-                Form f = new PhoneListForm(personId);
+                PhoneListForm f = Program.ResolveForm<PhoneListForm>();
+                f.OwnerId = personId;
                 f.ShowDialog();
             }
 
@@ -90,13 +94,13 @@ namespace WinFormsClient
 
         private void insertPerson_Click(object sender, EventArgs e)
         {
-            CreatePersonForm form = new CreatePersonForm();
+            CreatePersonForm form = Program.ResolveForm<CreatePersonForm>();
             DialogResult res = form.ShowDialog();
             if (res == System.Windows.Forms.DialogResult.OK)
             {
                 try
                 {
-                    accessor.Insert(form.Result);
+                    _personAccessor.Insert(form.Result);
                 }
                 catch (SqlException ex)
                 {
@@ -110,13 +114,13 @@ namespace WinFormsClient
 
         private void insertPhone_Click(object sender, EventArgs e)
         {
-            CreatePhoneForm form = new CreatePhoneForm();
+            CreatePhoneForm form = Program.ResolveForm<CreatePhoneForm>();
             DialogResult res = form.ShowDialog();
             if (res == System.Windows.Forms.DialogResult.OK)
             {
                 try
                 {
-                    Program.PhoneAccessor.Insert(form.Result);
+                    _phoneAccessor.Insert(form.Result);
                 }
                 catch (SqlException ex)
                 {
@@ -129,7 +133,7 @@ namespace WinFormsClient
 
         private void phoneWindowCall(object sender, EventArgs e)
         {
-            PhoneListForm plf = new PhoneListForm();
+            PhoneListForm plf = Program.ResolveForm<PhoneListForm>();
             plf.Show();
         }
         #endregion

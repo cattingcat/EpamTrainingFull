@@ -1,12 +1,9 @@
-﻿using DataAccessors.Entity;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 using System.IO;
-using System.Collections;
+
+using DataAccessors.Entity;
 
 namespace DataAccessors.Accessors
 {
@@ -15,66 +12,73 @@ namespace DataAccessors.Accessors
         private static XmlSerializer PersonArraySerializer = 
             new XmlSerializer(typeof(List<Person>), new[] { typeof(Person), typeof(Phone) });
 
-        private ICollection<Person> data;
-        private string fileName;
+        private ICollection<Person> _data;
+        private string _fileName;
 
         public FilePersonAccessor(string fileName)
         {
-            this.fileName = fileName;
+            this._fileName = fileName;
             try
             {
-                data = DeserializeCollection();
+                _data = DeserializeCollection();
             }
             catch
             {
-                data = new LinkedList<Person>();
+                _data = new LinkedList<Person>();
             }
         }
 
         public ICollection<Person> GetAll()
         {
-            return data;
+            return _data;
         }
+
         public Person GetById(object id)
         {
-            var res = from p in data where p.Id == (int)id select p;
+            var res = from p in _data where p.Id == (int)id select p;
             return res.FirstOrDefault<Person>();
         }
+
         public void DeleteById(object id)
         {
-            var res = from p in data where p.Id == (int)id select p;
+            var res = from p in _data where p.Id == (int)id select p;
             if (res.FirstOrDefault<Person>() != null)
             {
                 Person existPerson = res.First<Person>();
-                data.Remove(existPerson);
+                _data.Remove(existPerson);
             }
-            SerializeCollection(data);
+            SerializeCollection(_data);
         }
+
         public void Insert(Person p)
         {
-            var tmp = from ep in data where ep.Id == p.Id select ep;
+            var tmp = from ep in _data where ep.Id == p.Id select ep;
             Person existPerson = tmp.FirstOrDefault<Person>();
             if (existPerson != null)
             {
-                data.Remove(existPerson);
+                _data.Remove(existPerson);
             }            
-            data.Add(p);
-            SerializeCollection(data);
-        }     
+            _data.Add(p);
+            SerializeCollection(_data);
+        }
 
-        public void SerializeCollection(ICollection<Person> collection)
+
+        #region helpers
+        private void SerializeCollection(ICollection<Person> collection)
         {
-            using (StreamWriter sw = new StreamWriter(fileName))
+            using (StreamWriter sw = new StreamWriter(_fileName))
             {
                 PersonArraySerializer.Serialize(sw, collection.ToList<Person>());
             }
         }
-        public ICollection<Person> DeserializeCollection()
+
+        private ICollection<Person> DeserializeCollection()
         {
-            using (StreamReader sr = new StreamReader(fileName))
+            using (StreamReader sr = new StreamReader(_fileName))
             {               
                 return (List<Person>)PersonArraySerializer.Deserialize(sr);
             }
         }
+        #endregion
     }
 }

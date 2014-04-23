@@ -1,28 +1,29 @@
-﻿using DataAccessors.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Common;
+
+using DataAccessors.Entity;
 
 namespace DataAccessors.Accessors
 {
     public class ADOPersonAccessor: IAccessor<Person>
     {
-        private DbProviderFactory factory;
-        private string connectionString;    
+        private DbProviderFactory _factory;
+        private string _connectionString;    
 
         public ADOPersonAccessor(string appConfigConnectionString)
         {
-            connectionString = ConfigurationManager.ConnectionStrings[appConfigConnectionString].ConnectionString;
+            _connectionString = ConfigurationManager.ConnectionStrings[appConfigConnectionString].ConnectionString;
             string providerName = ConfigurationManager.ConnectionStrings[appConfigConnectionString].ProviderName;
-            factory = DbProviderFactories.GetFactory(providerName);
+            _factory = DbProviderFactories.GetFactory(providerName);
         }
 
 
         public ICollection<Person> GetAll()
         {
-            DbConnection conn = factory.CreateConnection();
-            conn.ConnectionString = connectionString;
+            DbConnection conn = _factory.CreateConnection();
+            conn.ConnectionString = _connectionString;
             conn.Open();
             using (conn)
             {
@@ -41,8 +42,8 @@ namespace DataAccessors.Accessors
 
         public Person GetById(object id)
         {
-            DbConnection conn = factory.CreateConnection();
-            conn.ConnectionString = connectionString;
+            DbConnection conn = _factory.CreateConnection();
+            conn.ConnectionString = _connectionString;
             conn.Open();
             using (conn)
             {
@@ -67,8 +68,8 @@ namespace DataAccessors.Accessors
 
         public void DeleteById(object id)
         {
-            DbConnection conn = factory.CreateConnection();
-            conn.ConnectionString = connectionString;
+            DbConnection conn = _factory.CreateConnection();
+            conn.ConnectionString = _connectionString;
             conn.Open();
             using (conn)
             {
@@ -86,8 +87,8 @@ namespace DataAccessors.Accessors
 
         public void Insert(Person p)
         {
-            DbConnection conn = factory.CreateConnection();
-            conn.ConnectionString = connectionString;
+            DbConnection conn = _factory.CreateConnection();
+            conn.ConnectionString = _connectionString;
             conn.Open();
             using (conn)
             {
@@ -122,6 +123,7 @@ namespace DataAccessors.Accessors
                 comm.ExecuteNonQuery();
             }
         }
+
 
         private Person ProcessDataReader(DbDataReader reader)
         {

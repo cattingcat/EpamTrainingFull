@@ -1,11 +1,8 @@
-﻿using DataAccessors.Entity;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
+
+using DataAccessors.Entity;
 
 namespace DataAccessors.Accessors
 {
@@ -13,17 +10,17 @@ namespace DataAccessors.Accessors
     {
         private static XmlSerializer serializer = new XmlSerializer(typeof(Phone));
 
-        private string directoryName;
+        private string _directoryName;
 
         public DirectoryPhoneAccessor(string path)
         {
-            directoryName = path;
+            _directoryName = path;
         }
 
         public ICollection<Phone> GetAll()
         {
             ICollection<Phone> res = new List<Phone>();
-            foreach (string filename in Directory.EnumerateFiles(directoryName, "*.xml"))
+            foreach (string filename in Directory.EnumerateFiles(_directoryName, "*.xml"))
             {
                 using (FileStream fs = File.Open(filename, FileMode.Open))
                 {
@@ -33,6 +30,7 @@ namespace DataAccessors.Accessors
             }
             return res;
         }
+
         public Phone GetById(object id)
         {
             string path = GetFileName((int)id);
@@ -48,16 +46,20 @@ namespace DataAccessors.Accessors
                 return null;
             }
         }
+
         public void DeleteById(object id)
         {
             string path = GetFileName((int)id);
             File.Delete(path);
         }
+
         public void Insert(Phone p)
         {
             CreateOrReplace(p);
         }
 
+
+        #region helpers
         private void SerializeCollection(ICollection<Phone> collection)
         {
             foreach (Phone p in collection)
@@ -65,6 +67,7 @@ namespace DataAccessors.Accessors
                 CreateOrIgnore(p);
             }
         }
+
         private void CreateOrReplace(Phone p)
         {
             string path = GetFileName(p.Id);
@@ -83,6 +86,7 @@ namespace DataAccessors.Accessors
                 }
             }
         }
+
         private void CreateOrIgnore(Phone p)
         {
             string path = GetFileName(p.Id);
@@ -98,10 +102,12 @@ namespace DataAccessors.Accessors
                 }
             }
         }
+
         private string GetFileName(int id)
         {
-            string path = Path.Combine(directoryName, id.ToString());
+            string path = Path.Combine(_directoryName, id.ToString());
             return Path.ChangeExtension(path, "xml");
         }
+        #endregion
     }
 }

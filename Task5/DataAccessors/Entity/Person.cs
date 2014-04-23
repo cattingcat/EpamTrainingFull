@@ -1,9 +1,9 @@
-﻿using MyOrm.Attributes;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Xml.Serialization;
+
+using MyOrm.Attributes;
 
 namespace DataAccessors.Entity
 {

@@ -18,15 +18,18 @@ namespace WebClient
             {
                 exceptionDescription.InnerText = "Sorry, database problem";
             }
-            Session.Remove("exception");
-
+            Session.Remove("exception");            
 
             string[] imgSrc = Directory.EnumerateFiles(Server.MapPath(@"\content"), "*.jpg").ToArray();
             Random rnd = new Random();
-            string filename = imgSrc[rnd.Next(imgSrc.Length - 1) + 1];            
+            string filename = imgSrc[rnd.Next(imgSrc.Length - 2) + 1];            
             filename = Path.GetFileNameWithoutExtension(filename);             
             img.Src = String.Format("content/{0}.jpg", filename);
 
+            if (!string.IsNullOrEmpty(RouteData.Values["img"] as string))
+            {
+                img.Src = String.Format("content/{0}.jpg", RouteData.Values["img"] as string);
+            }
         }
     }
 }

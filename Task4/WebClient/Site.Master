@@ -4,11 +4,11 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="styles/style.css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/styles/style.css" />
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script type="text/javascript" src="scripts/script.js"></script>
+    <script type="text/javascript" src="/scripts/script.js"></script>
     <title>Web client</title>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -18,11 +18,42 @@
 
 
 <body onload="init();">
-    <form id="form1" runat="server">
-    <div>
-        <asp:ContentPlaceHolder ID="FormPlaceHolder" runat="server">        
-        </asp:ContentPlaceHolder>
+    <div class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Web client</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/PersonList">Persons</a></li>
+                <li><a href="/PhoneList">Phones</a></li>
+            </ul>
+        </div>
     </div>
-    </form>
+    </div>
+    <div class="container">      
+        <form id="form1" method="post" runat="server">
+            <div>
+                <asp:ContentPlaceHolder ID="FormPlaceHolder" runat="server">
+                </asp:ContentPlaceHolder>
+                <label runat="server" id="elapsedTime"></label>
+            </div>
+
+            <div id='panel'>
+                <div class="form-signin">
+                    <asp:ContentPlaceHolder ID="InsertFieldsPlaceholder" runat="server">
+                    </asp:ContentPlaceHolder>
+                </div>
+            </div>
+            <button type="button" class="btn btn-lg btn-primary" id='click'>Insert </button>
+        </form>
+        
+    </div>
 </body>
 </html>

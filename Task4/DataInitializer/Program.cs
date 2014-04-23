@@ -40,7 +40,7 @@ namespace DataInitializer
             #endregion
 
             #region Dir init
-            /*DirectoryPersonAccessor fpa = new DirectoryPersonAccessor(@"App_Data\FolderDb\Persons");
+            DirectoryPersonAccessor fpa = new DirectoryPersonAccessor(@"App_Data\FolderDb\Persons");
             for (int i = 0; i < 10; ++i)
             {
                 fpa.Insert(new Person
@@ -61,7 +61,7 @@ namespace DataInitializer
                     Number = Guid.NewGuid().ToString(),
                     PersonId = i
                 });
-            }*/
+            }
             #endregion
 
             #region Db init

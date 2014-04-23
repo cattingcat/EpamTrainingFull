@@ -1,7 +1,8 @@
-﻿using DataAccessors.Entity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Xml.Serialization;
+
+using DataAccessors.Entity;
 
 namespace DataAccessors.Accessors
 {
@@ -9,17 +10,17 @@ namespace DataAccessors.Accessors
     {
         private static XmlSerializer serializer = new XmlSerializer(typeof(Person));
 
-        private string directoryName;
+        private string _directoryName;
 
         public DirectoryPersonAccessor(string path)
         {
-            directoryName = path;
+            _directoryName = path;
         }
 
         public ICollection<Person> GetAll()
         {
             ICollection<Person> res = new List<Person>();
-            foreach (string filename in Directory.EnumerateFiles(directoryName, "*.xml"))
+            foreach (string filename in Directory.EnumerateFiles(_directoryName, "*.xml"))
             {
                 using (FileStream fs = File.Open(filename, FileMode.Open))
                 {
@@ -29,6 +30,7 @@ namespace DataAccessors.Accessors
             }
             return res;
         }
+
         public Person GetById(object id)
         {
             string path = GetFileName((int)id);
@@ -44,16 +46,20 @@ namespace DataAccessors.Accessors
                 return null;
             }
         }
+
         public void DeleteById(object id)
         {
             string path = GetFileName((int)id);
             File.Delete(path);
         }
+
         public void Insert(Person p)
         {
             CreateOrReplace(p);
-        }       
+        }
 
+
+        #region helpers
         private void SerializeCollection(ICollection<Person> collection)
         {
             foreach (Person p in collection)
@@ -61,6 +67,7 @@ namespace DataAccessors.Accessors
                 CreateOrIgnore(p);
             }
         }
+
         private void CreateOrReplace(Person p)
         {
             string path = GetFileName(p.Id);
@@ -79,6 +86,7 @@ namespace DataAccessors.Accessors
                 }
             }
         }
+
         private void CreateOrIgnore(Person p)
         {
             string path = GetFileName(p.Id);
@@ -94,10 +102,12 @@ namespace DataAccessors.Accessors
                 }
             }
         }
+
         private string GetFileName(int id)
         {
-            string path = Path.Combine(directoryName, id.ToString());
+            string path = Path.Combine(_directoryName, id.ToString());
             return Path.ChangeExtension(path, "xml");
         }
+        #endregion
     }
 }

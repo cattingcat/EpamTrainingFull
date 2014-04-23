@@ -25,7 +25,7 @@ namespace DataAccessors.Accessors
         }
 
         public ICollection<Person> GetAll()
-        {            
+        {
             return orm.SelectAll<Person>();
         }
 

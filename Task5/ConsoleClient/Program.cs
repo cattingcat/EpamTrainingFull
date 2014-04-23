@@ -1,16 +1,12 @@
-﻿using DataAccessors.Accessors;
-using DataAccessors.Data;
-using DataAccessors.Entity;
-using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data.Common;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
+
+using NLog;
+
+using DataAccessors.Accessors;
+using DataAccessors.Entity;
 
 namespace ConsoleClient
 {

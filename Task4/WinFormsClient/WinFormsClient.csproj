@@ -47,7 +47,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog">
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,25 +63,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainForm.cs">
+    <Compile Include="Persons\PersonListForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="Persons\PersonListForm.Designer.cs">
+      <DependentUpon>PersonListForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="PersonForm.cs">
+    <Compile Include="Persons\CreatePersonForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PersonForm.Designer.cs">
-      <DependentUpon>PersonForm.cs</DependentUpon>
+    <Compile Include="Persons\CreatePersonForm.Designer.cs">
+      <DependentUpon>CreatePersonForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Phones\CreatePhoneForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Phones\CreatePhoneForm.Designer.cs">
+      <DependentUpon>CreatePhoneForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Phones\PhoneListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Phones\PhoneListForm.Designer.cs">
+      <DependentUpon>PhoneListForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Persons\PersonListForm.resx">
+      <DependentUpon>PersonListForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PersonForm.resx">
-      <DependentUpon>PersonForm.cs</DependentUpon>
+    <EmbeddedResource Include="Persons\CreatePersonForm.resx">
+      <DependentUpon>CreatePersonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Phones\CreatePhoneForm.resx">
+      <DependentUpon>CreatePhoneForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Phones\PhoneListForm.resx">
+      <DependentUpon>PhoneListForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -88,6 +110,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -128,6 +151,7 @@
       <Name>DataProject</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

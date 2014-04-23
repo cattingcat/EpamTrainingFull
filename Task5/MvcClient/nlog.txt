@@ -1,0 +1,46 @@
+04/23/2014 22:29:18|Trace|Application start!
+04/23/2014 22:29:19|Trace|Ninject module load, current accessor: orm
+04/23/2014 22:29:19|Trace|Person controller created
+04/23/2014 22:29:19|Trace|Person controller /Index
+04/23/2014 22:30:26|Trace|Phone controller created
+04/23/2014 22:30:26|Trace|Phone controller /Index
+04/23/2014 22:30:31|Trace|Person controller created
+04/23/2014 22:30:31|Trace|Person controller /Index
+04/23/2014 22:30:32|Trace|Phone controller created
+04/23/2014 22:30:32|Trace|Phone controller /Index
+04/23/2014 22:30:36|Trace|Phone controller created
+04/23/2014 22:30:36|Trace|Phone controller /Create
+04/23/2014 22:35:00|Trace|Application start!
+04/23/2014 22:35:02|Trace|Ninject module load, current accessor: orm
+04/23/2014 22:35:02|Trace|Person controller created
+04/23/2014 22:35:02|Trace|Person controller /Index
+04/23/2014 22:42:07|Trace|Application start!
+04/23/2014 22:42:07|Trace|Ninject module load, current accessor: orm
+04/23/2014 22:42:07|Trace|Person controller created
+04/23/2014 22:42:07|Trace|Person controller /Index
+04/23/2014 22:43:23|Trace|Person controller created
+04/23/2014 22:43:23|Trace|Person controller /Index
+04/23/2014 22:43:30|Trace|Person controller created
+04/23/2014 22:43:30|Trace|Person controller /Index
+04/23/2014 22:45:48|Trace|Person controller created
+04/23/2014 22:45:48|Trace|Person controller /Index
+04/23/2014 22:46:31|Trace|Person controller created
+04/23/2014 22:46:31|Trace|Person controller /Index
+04/23/2014 22:47:17|Trace|Person controller created
+04/23/2014 22:47:17|Trace|Person controller /Index
+04/23/2014 22:55:03|Trace|Person controller created
+04/23/2014 22:55:03|Trace|Person controller /Index
+04/23/2014 23:01:15|Trace|Application start!
+04/23/2014 23:01:15|Trace|Ninject module load, current accessor: orm
+04/23/2014 23:01:16|Trace|Person controller created
+04/23/2014 23:01:16|Trace|Person controller /Index
+04/23/2014 23:02:45|Trace|Application start!
+04/23/2014 23:02:46|Trace|Ninject module load, current accessor: orm
+04/23/2014 23:02:46|Trace|Person controller created
+04/23/2014 23:02:46|Trace|Person controller /Index
+04/23/2014 23:02:52|Trace|Person controller created
+04/23/2014 23:02:52|Trace|Person controller /Create
+04/23/2014 23:02:57|Trace|Phone controller created
+04/23/2014 23:02:57|Trace|Phone controller /Index
+04/23/2014 23:03:00|Trace|Phone controller created
+04/23/2014 23:03:00|Trace|Phone controller /Create

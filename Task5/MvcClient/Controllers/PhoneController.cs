@@ -1,6 +1,9 @@
-﻿using DataAccessors.Entity;
+﻿using DataAccessors.Accessors;
+using DataAccessors.Entity;
+using NLog;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -8,92 +11,75 @@ using System.Web.Mvc;
 namespace MvcClient.Controllers
 {
     public class PhoneController : Controller
-    {        
+    {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
+        private IAccessor<Person> _personAccessor;
+        private IAccessor<Phone> _phoneAccessor;
+
+        public PhoneController(IAccessor<Phone> phoneAccessor, IAccessor<Person> personAccessor)
+        {
+            logger.Trace("Phone controller created");
+
+            _personAccessor = personAccessor;
+            _phoneAccessor = phoneAccessor;
+        }
+
         // GET: /Phone/
         public ActionResult Index()
         {
-            IEnumerable<Phone> phones = MvcApplication.PhoneAccessor.GetAll();
-            ViewResult v = View();
-            v.ViewData["phones"] = phones;
-            return v;
+            logger.Trace("Phone controller /Index");
+
+            return View(_phoneAccessor.GetAll());
         }
         
         // GET: /Phone/Details/5
+        // Redirect to owner-person details
         public ActionResult Details(int id)
         {
-            return View();
+            logger.Trace("Phone controller /Details/{0}", id);
+
+            Phone phone = _phoneAccessor.GetAll().SingleOrDefault(p => p.Id == id);   
+            var dict = new System.Web.Routing.RouteValueDictionary();
+            dict.Add("id", phone.PersonId);
+            return RedirectToAction("Details", "Person", dict);        
         }
         
         // GET: /Phone/Create
         public ActionResult Create()
         {
+            logger.Trace("Phone controller /Create");
+
+            ViewBag.Persons = _personAccessor.GetAll();
             return View();
         }
         
         // POST: /Phone/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(Phone phone)
         {
-            try
-            {
-                // TODO: Add insert logic here
-                Phone p = new Phone
-                {
-                    Id = int.Parse(collection["id"]),
-                    Number = collection["num"].Trim(),
-                    PersonId = int.Parse(collection["owner"])
-                };
-                MvcApplication.PhoneAccessor.Insert(p);
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        
-        // GET: /Phone/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-        
-        // POST: /Phone/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+            logger.Trace("Phone controller /Create POST {0}", phone.Id);
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        
-        // GET: /Phone/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
+            _phoneAccessor.Insert(phone);
+            return RedirectToAction("Index");
         }
         
         // POST: /Phone/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(int id)
         {
+            logger.Trace("Phone controller /Delete/{0}", id);
+
             try
             {
-                // TODO: Add delete logic here
-                MvcApplication.PhoneAccessor.DeleteById(id);
+                _phoneAccessor.DeleteById(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (SqlException e)
             {
-                return RedirectToAction("Index");
-            }
-        }
+                Session.Add("Exception", e);
+                return RedirectToAction("Index", "Exception");                
+            }            
+        }     
     }
 }

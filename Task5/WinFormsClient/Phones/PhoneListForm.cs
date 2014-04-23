@@ -15,18 +15,13 @@ namespace WinFormsClient.Phones
 {
     public partial class PhoneListForm : Form
     {
-        private IAccessor<Phone> accessor;
-        private int? ownerId;
+        private IAccessor<Phone> _phoneAccessor;
+        public int? OwnerId { get; set; }
 
-        public PhoneListForm()
+        public PhoneListForm(IAccessor<Phone> phoneAccessor)
         {
-            accessor = Program.PhoneAccessor;
+            _phoneAccessor = phoneAccessor;
             InitializeComponent();
-        }
-
-        public PhoneListForm(int ownerId): this()
-        {
-            this.ownerId = ownerId;
         }
 
         private void SetData(IEnumerable<Phone> phones)
@@ -43,13 +38,13 @@ namespace WinFormsClient.Phones
             IEnumerable<Phone> phones = null;
             try
             {
-                if (ownerId.HasValue)
+                if (OwnerId.HasValue)
                 {
-                    phones = from p in accessor.GetAll() where p.PersonId == ownerId.Value select p;
+                    phones = from p in _phoneAccessor.GetAll() where p.PersonId == OwnerId.Value select p;
                 }
                 else
                 {
-                    phones = accessor.GetAll();
+                    phones = _phoneAccessor.GetAll();
                 }
             }
             catch (SqlException ex)
@@ -77,7 +72,7 @@ namespace WinFormsClient.Phones
                 int phoneId = (int)dataGridView1.Rows[row].Cells[0].Value;
                 try
                 {
-                    accessor.DeleteById(phoneId);
+                    _phoneAccessor.DeleteById(phoneId);
                 }
                 catch (SqlException ex)
                 {

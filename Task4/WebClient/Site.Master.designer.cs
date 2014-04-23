@@ -38,5 +38,23 @@ namespace WebClient {
         /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder FormPlaceHolder;
+        
+        /// <summary>
+        /// elapsedTime элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl elapsedTime;
+        
+        /// <summary>
+        /// InsertFieldsPlaceholder элемент управления.
+        /// </summary>
+        /// <remarks>
+        /// Автоматически создаваемое поле.
+        /// Для изменения переместите объявление поля из файла конструктора в файл кода программной части.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder InsertFieldsPlaceholder;
     }
 }

@@ -1,34 +1,32 @@
-﻿using DataAccessors.Entity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+using DataAccessors.Entity;
 
 namespace DataAccessors.Accessors
 {
     public class ADOPhoneAccessor: IAccessor<Phone>
     {
-        private DbProviderFactory factory;
-        private string connectionString;
+        private DbProviderFactory _factory;
+        private string _connectionString;
 
         private static string PhoneDbFields = "id, number, person_id";
         private static string TblName = "PhoneTbl";
 
         public ADOPhoneAccessor(string appConfigConnectionString)
         {
-            connectionString = ConfigurationManager.ConnectionStrings[appConfigConnectionString].ConnectionString;
+            _connectionString = ConfigurationManager.ConnectionStrings[appConfigConnectionString].ConnectionString;
             string providerName = ConfigurationManager.ConnectionStrings[appConfigConnectionString].ProviderName;
-            factory = DbProviderFactories.GetFactory(providerName);
+            _factory = DbProviderFactories.GetFactory(providerName);
         }
 
 
         public ICollection<Phone> GetAll()
         {
-            DbConnection conn = factory.CreateConnection();
-            conn.ConnectionString = connectionString;
+            DbConnection conn = _factory.CreateConnection();
+            conn.ConnectionString = _connectionString;
             conn.Open();
             using (conn)
             {
@@ -56,8 +54,8 @@ namespace DataAccessors.Accessors
 
         public Phone GetById(object id)
         {
-            DbConnection conn = factory.CreateConnection();
-            conn.ConnectionString = connectionString;
+            DbConnection conn = _factory.CreateConnection();
+            conn.ConnectionString = _connectionString;
             conn.Open();
             using (conn)
             {
@@ -92,8 +90,8 @@ namespace DataAccessors.Accessors
 
         public void DeleteById(object id)
         {
-            DbConnection conn = factory.CreateConnection();
-            conn.ConnectionString = connectionString;
+            DbConnection conn = _factory.CreateConnection();
+            conn.ConnectionString = _connectionString;
             conn.Open();
             using (conn)
             {
@@ -111,8 +109,8 @@ namespace DataAccessors.Accessors
 
         public void Insert(Phone p)
         {
-            DbConnection conn = factory.CreateConnection();
-            conn.ConnectionString = connectionString;
+            DbConnection conn = _factory.CreateConnection();
+            conn.ConnectionString = _connectionString;
             conn.Open();
             using (conn)
             {
