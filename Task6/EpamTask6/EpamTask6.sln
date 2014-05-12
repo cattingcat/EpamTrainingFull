@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EpamTask6Console", "EpamTask6Console\EpamTask6Console.csproj", "{35BFA48B-160A-4F33-83A7-248393CDBF8F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0C85E7B9-7397-494C-8B5D-A1AC893B2DD5} = {0C85E7B9-7397-494C-8B5D-A1AC893B2DD5}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyIoCContainer", "MyIoCContainer\MyIoCContainer.csproj", "{093DF233-4AF1-49BE-BFBA-04F10256BC0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyLogger", "MyLogger\MyLogger.csproj", "{BD1B7DC9-2FF1-4D59-9B7B-B35F393E3763}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessors", "DataAccessors\DataAccessors.csproj", "{CC4318D2-979F-4EF0-9125-283C7366D246}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProject", "DataProject\DataProject.csproj", "{0C85E7B9-7397-494C-8B5D-A1AC893B2DD5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyOrm", "MyOrm\MyOrm.csproj", "{F2C2BCAB-1A58-409F-8E51-F1417D624A8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{35BFA48B-160A-4F33-83A7-248393CDBF8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35BFA48B-160A-4F33-83A7-248393CDBF8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35BFA48B-160A-4F33-83A7-248393CDBF8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35BFA48B-160A-4F33-83A7-248393CDBF8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{093DF233-4AF1-49BE-BFBA-04F10256BC0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{093DF233-4AF1-49BE-BFBA-04F10256BC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{093DF233-4AF1-49BE-BFBA-04F10256BC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{093DF233-4AF1-49BE-BFBA-04F10256BC0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD1B7DC9-2FF1-4D59-9B7B-B35F393E3763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD1B7DC9-2FF1-4D59-9B7B-B35F393E3763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD1B7DC9-2FF1-4D59-9B7B-B35F393E3763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD1B7DC9-2FF1-4D59-9B7B-B35F393E3763}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC4318D2-979F-4EF0-9125-283C7366D246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC4318D2-979F-4EF0-9125-283C7366D246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC4318D2-979F-4EF0-9125-283C7366D246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC4318D2-979F-4EF0-9125-283C7366D246}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C85E7B9-7397-494C-8B5D-A1AC893B2DD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C85E7B9-7397-494C-8B5D-A1AC893B2DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C85E7B9-7397-494C-8B5D-A1AC893B2DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C85E7B9-7397-494C-8B5D-A1AC893B2DD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2C2BCAB-1A58-409F-8E51-F1417D624A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2C2BCAB-1A58-409F-8E51-F1417D624A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2C2BCAB-1A58-409F-8E51-F1417D624A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2C2BCAB-1A58-409F-8E51-F1417D624A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
