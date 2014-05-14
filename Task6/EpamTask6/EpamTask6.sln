@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataProject", "DataProject\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyOrm", "MyOrm\MyOrm.csproj", "{F2C2BCAB-1A58-409F-8E51-F1417D624A8B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IoC_Test", "IoC_Test\IoC_Test.csproj", "{DFF83846-7057-4BEE-9F3F-8F0658720389}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{F2C2BCAB-1A58-409F-8E51-F1417D624A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2C2BCAB-1A58-409F-8E51-F1417D624A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2C2BCAB-1A58-409F-8E51-F1417D624A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFF83846-7057-4BEE-9F3F-8F0658720389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFF83846-7057-4BEE-9F3F-8F0658720389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFF83846-7057-4BEE-9F3F-8F0658720389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFF83846-7057-4BEE-9F3F-8F0658720389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,38 +14,6 @@ using System.Threading.Tasks;
 
 namespace EpamTask6Console
 {
-    /*class Program
-    {
-        static void Main(string[] args)
-        {
-            
-            MyIoC container = new MyIoC();
-            container.Register(typeof(ISomeInterface), typeof(ConcreteClass1));
-
-            ISomeInterface obj = container.Resolve<ISomeInterface>();
-            obj.foo();
-
-            ClassDependedInterface cdi = container.Resolve<ClassDependedInterface>();
-            cdi.Foo();
-            
-
-            IIocContainer c = new NinjectAdapter();
-            c.Register<ISomeInterface, ConcreteClass1>();
-            //c.RegistreInstance<ISomeInterface>(new ConcreteClass2());
-            var tmp = c.Resolve<ISomeInterface>();
-            tmp.foo();
-
-            //ILogger logger = new Log4NetAdapter();
-            ILogger logger = new MyLogger.MyLogger("my_logger.log");
-            logger.Log(LogLevel.Fatal, "121212");
-
-
-
-
-            Console.ReadKey();
-        }
-    }*/
-
     class Program
     {
         class SimpleTimer : IDisposable
@@ -70,9 +38,9 @@ namespace EpamTask6Console
         static void Main(string[] args)
         {            
             ioc = new MyIoCAdapter();
-            ioc.RegisterInstance<ILogger>(new MyLogger.MyLogger("my_logger.log"));
+            ioc.Register<ILogger>(new MyLogger.MyLogger("my_logger.log"));
             ILogger log = ioc.Resolve<ILogger>();
-            log.Trace("App run!");
+            log.Trace("App run!");            
 
             RegisterAccessors();
 
@@ -255,8 +223,8 @@ memory accessor    - 5");
                     //phoneAcc = new MemoryPhoneAccessor();
                     break;
             }
-            ioc.RegisterInstance<IAccessor<Person>>(personAcc);
-            ioc.RegisterInstance<IAccessor<Phone>>(phoneAcc);
+            ioc.Register<IAccessor<Person>>(personAcc);
+            ioc.Register<IAccessor<Phone>>(phoneAcc);
         }
     } 
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Unity;
+using MyIoCContainer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace EpamTask6Console.IocAdapters
             return _uc.Resolve<T>();
         }
 
-        public void RegisterInstance<T>(T instance)where T : class
+        public void Register<T>(T instance)where T : class
         {
             _uc.RegisterInstance<T>(instance);
         }

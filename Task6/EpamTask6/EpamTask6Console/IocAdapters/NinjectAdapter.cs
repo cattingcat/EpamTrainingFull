@@ -1,4 +1,5 @@
-﻿using Ninject;
+﻿using MyIoCContainer;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace EpamTask6Console.IocAdapters
             return _ninject.Get<T>();
         }
 
-        public void RegisterInstance<T>(T instance) where T : class
+        public void Register<T>(T instance) where T : class
         {
             _ninject.Bind<T>().ToConstant(instance);
         }

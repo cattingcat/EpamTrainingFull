@@ -1,5 +1,6 @@
 ﻿using Castle.MicroKernel.Registration;
 using Castle.Windsor;
+using MyIoCContainer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace EpamTask6Console.IocAdapters
             return _windsor.Resolve<T>();
         }
 
-        public void RegisterInstance<T>(T instance) where T : class
+        public void Register<T>(T instance) where T : class
         {
             _windsor.Register(Component.For<T>().Instance(instance));
         }

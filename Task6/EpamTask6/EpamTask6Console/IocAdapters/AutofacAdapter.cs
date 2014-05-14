@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using MyIoCContainer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace EpamTask6Console.IocAdapters
             return _container.Resolve<T>();
         }
 
-        public void RegisterInstance<T>(T instance) where T : class
+        public void Register<T>(T instance) where T : class
         {
             throw new NotImplementedException();
         }

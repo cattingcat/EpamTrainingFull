@@ -14,7 +14,7 @@ namespace EpamTask6Console.IocAdapters
         public void Register<TFrom, TTo>() where TTo : TFrom
             where TFrom : class
         {
-            _ioc.Register(typeof(TFrom), typeof(TTo));
+            _ioc.Register<TFrom, TTo>();
         }
 
         public T Resolve<T>()where T : class
@@ -22,9 +22,9 @@ namespace EpamTask6Console.IocAdapters
             return _ioc.Resolve<T>();
         }
 
-        public void RegisterInstance<T>(T instance)where T : class
+        public void Register<T>(T instance)where T : class
         {
-            _ioc.Register(typeof(T), instance);
+            _ioc.Register<T>(instance);
         }
     }
 }

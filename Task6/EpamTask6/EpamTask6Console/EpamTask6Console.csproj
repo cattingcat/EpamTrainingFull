@@ -69,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IocAdapters\AutofacAdapter.cs" />
-    <Compile Include="IocAdapters\IIocContainer.cs" />
     <Compile Include="IocAdapters\MyIoCAdapter.cs" />
     <Compile Include="IocAdapters\NinjectAdapter.cs" />
     <Compile Include="IocAdapters\UnityAdapter.cs" />
