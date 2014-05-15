@@ -33,8 +33,7 @@ namespace MyIoCContainer.Resolvers
                 }
                 else
                 {
-                    // TODO Resolve with constructor args
-                    return null;
+                    throw new ArgumentException("Concrete type havent constructor without arguments, use Register witn constructor args");
                 }
             }
             else

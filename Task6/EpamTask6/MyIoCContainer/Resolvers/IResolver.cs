@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyIoCContainer.Resolvers
 {
-    interface IResolver
+    internal interface IResolver
     {
         object Resolve();
     }

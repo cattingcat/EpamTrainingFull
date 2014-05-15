@@ -84,6 +84,10 @@ namespace IoC_Test
 
             MyIoC c = new MyIoC();
             c.Register<IDependency, Dependency1>(new { a = 7, b = 8 });
+
+            c.Register<ICollection<int>, int[]>(new[] { 7 });
+            Console.WriteLine(c.Resolve<ICollection<int>>().GetType().Name);
+
             var tmp = c.Resolve<Dependended>(new { a = 77, b = 88, c = new[]{1, 2, 3}});
 
             Console.ReadKey();
